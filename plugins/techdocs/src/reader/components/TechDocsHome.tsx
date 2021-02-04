@@ -14,22 +14,25 @@
  * limitations under the License.
  */
 
+import React, { useState } from 'react';
+
 import {
   Content,
   Header,
-  ItemCard,
+  HeaderTabs,
   Page,
   Progress,
   useApi,
 } from '@backstage/core';
 import { catalogApiRef } from '@backstage/plugin-catalog-react';
-import { Grid } from '@material-ui/core';
-import React from 'react';
-import { generatePath } from 'react-router-dom';
+
 import { useAsync } from 'react-use';
-import { rootDocsRouteRef } from '../../plugin';
+
+import { OverviewContent } from './OverviewContent';
+import { OwnedContent } from './OwnedContent';
 
 export const TechDocsHome = () => {
+  const [selectedTab, setSelectedTab] = useState<number>(0);
   const catalogApi = useApi(catalogApiRef);
 
   const { value, loading, error } = useAsync(async () => {
@@ -66,6 +69,7 @@ export const TechDocsHome = () => {
       </Page>
     );
   }
+  const tabs = [{ label: 'Overview' }, { label: 'Owned Documents' }];
 
   return (
     <Page themeId="documentation">
@@ -73,26 +77,19 @@ export const TechDocsHome = () => {
         title="Documentation"
         subtitle="Documentation available in Backstage"
       />
-      <Content>
-        <Grid container data-testid="docs-explore">
-          {value?.length
-            ? value.map((entity, index: number) => (
-                <Grid key={index} item xs={12} sm={6} md={3}>
-                  <ItemCard
-                    href={generatePath(rootDocsRouteRef.path, {
-                      namespace: entity.metadata.namespace ?? 'default',
-                      kind: entity.kind,
-                      name: entity.metadata.name,
-                    })}
-                    title={entity.metadata.name}
-                    label="Read Docs"
-                    description={entity.metadata.description}
-                  />
-                </Grid>
-              ))
-            : null}
-        </Grid>
-      </Content>
+      <HeaderTabs
+        selectedIndex={selectedTab}
+        onChange={index => setSelectedTab(index)}
+        tabs={tabs.map(({ label }, index) => ({
+          id: index.toString(),
+          label,
+        }))}
+      />
+      {selectedTab === 0 ? (
+        <OverviewContent value={value} />
+      ) : (
+        <OwnedContent value={value} />
+      )}
     </Page>
   );
 };
