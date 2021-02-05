@@ -15,7 +15,10 @@
  */
 
 import React, { useState } from 'react';
+import { useAsync } from 'react-use';
 
+import { catalogApiRef, CatalogApi } from '@backstage/plugin-catalog-react';
+import { Entity } from '@backstage/catalog-model';
 import {
   Content,
   Header,
@@ -24,20 +27,19 @@ import {
   Progress,
   useApi,
 } from '@backstage/core';
-import { catalogApiRef } from '@backstage/plugin-catalog-react';
-
-import { useAsync } from 'react-use';
 
 import { OverviewContent } from './OverviewContent';
 import { OwnedContent } from './OwnedContent';
 
 export const TechDocsHome = () => {
   const [selectedTab, setSelectedTab] = useState<number>(0);
-  const catalogApi = useApi(catalogApiRef);
+  const catalogApi: CatalogApi = useApi(catalogApiRef);
+
+  const tabs = [{ label: 'Overview' }, { label: 'Owned Documents' }];
 
   const { value, loading, error } = useAsync(async () => {
     const response = await catalogApi.getEntities();
-    return response.items.filter(entity => {
+    return response.items.filter((entity: Entity) => {
       return !!entity.metadata.annotations?.['backstage.io/techdocs-ref'];
     });
   });
@@ -69,7 +71,6 @@ export const TechDocsHome = () => {
       </Page>
     );
   }
-  const tabs = [{ label: 'Overview' }, { label: 'Owned Documents' }];
 
   return (
     <Page themeId="documentation">
