@@ -16,9 +16,10 @@
 
 import { JsonValue } from '@backstage/config';
 import { JSONSchema7 } from 'json-schema';
+import type { UiSchema } from 'react-jsonschema-form';
 
 export type JSONSchema = JSONSchema7 & { [key in string]?: JsonValue };
-
+export type UISchema = UiSchema;
 /**
  * A complete entity name, with the full kind-namespace-name triplet.
  */

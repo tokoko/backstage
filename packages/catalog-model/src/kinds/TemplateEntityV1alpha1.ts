@@ -19,14 +19,15 @@ import schema from '../schema/kinds/Template.v1alpha1.schema.json';
 import entitySchema from '../schema/Entity.schema.json';
 import entityMetaSchema from '../schema/EntityMeta.schema.json';
 import commonSchema from '../schema/shared/common.schema.json';
-import type { JSONSchema } from '../types';
+import type { JSONSchema, UISchema } from '../types';
 import { ajvCompiledJsonSchemaValidator } from './util';
+import { JsonObject } from '@backstage/config';
 
-const API_VERSION = ['backstage.io/v1alpha1', 'backstage.io/v1beta1'] as const;
 const KIND = 'Template' as const;
 
+const ALPHA_VERSION = 'backstage.io/v1alpha1' as const;
 export interface TemplateEntityV1alpha1 extends Entity {
-  apiVersion: typeof API_VERSION[number];
+  apiVersion: typeof ALPHA_VERSION;
   kind: typeof KIND;
   spec: {
     type: string;
@@ -36,9 +37,31 @@ export interface TemplateEntityV1alpha1 extends Entity {
   };
 }
 
+const BETA_VERSION = 'backstage.io/v1beta1' as const;
+export interface TemplateEntityV1beta1 extends Entity {
+  apiVersion: typeof BETA_VERSION;
+  kind: typeof KIND;
+  spec: {
+    type: string;
+    values: {
+      schema: JSONSchema;
+      uiSchema?: UISchema;
+    };
+    steps: { id: string; name: string; action: string; params: JsonObject }[];
+    output: JsonObject;
+  };
+}
+
 export const templateEntityV1alpha1Validator = ajvCompiledJsonSchemaValidator(
   KIND,
-  API_VERSION,
+  [ALPHA_VERSION],
+  schema,
+  [commonSchema, entityMetaSchema, entitySchema],
+);
+
+export const templateEntityV1beta1Validator = ajvCompiledJsonSchemaValidator(
+  KIND,
+  [BETA_VERSION],
   schema,
   [commonSchema, entityMetaSchema, entitySchema],
 );

@@ -1807,6 +1807,7 @@
   dependencies:
     "@backstage/config" "^0.1.2"
     "@types/json-schema" "^7.0.5"
+    "@types/react-jsonschema-form" "^1.7.4"
     "@types/yup" "^0.29.8"
     ajv "^7.0.3"
     json-schema "^0.2.5"
@@ -1819,6 +1820,7 @@
   dependencies:
     "@backstage/config" "^0.1.2"
     "@types/json-schema" "^7.0.5"
+    "@types/react-jsonschema-form" "^1.7.4"
     "@types/yup" "^0.29.8"
     ajv "^7.0.3"
     json-schema "^0.2.5"
@@ -6618,6 +6620,14 @@
   resolved "https://registry.npmjs.org/@types/react-helmet/-/react-helmet-6.1.0.tgz#af586ed685f4905e2adc7462d1d65ace52beee7a"
   integrity sha512-PYRoU1XJFOzQ3BHvWL1T8iDNbRjdMDJMT5hFmZKGbsq09kbSqJy61uwEpTrbTNWDopVphUT34zUSVLK9pjsgYQ==
   dependencies:
+    "@types/react" "*"
+
+"@types/react-jsonschema-form@^1.7.4":
+  version "1.7.4"
+  resolved "https://registry.npmjs.org/@types/react-jsonschema-form/-/react-jsonschema-form-1.7.4.tgz#b9dded80f830bce11a623107633b13964a143cca"
+  integrity sha512-TSsntIuB8bfheC/ZpjUmgB6+m5cLR4Gbh8rnqpSYB6T4e2TwzNICuKC5AykZI0XTxqLJmShyVsJxuo4aih64Gw==
+  dependencies:
+    "@types/json-schema" "*"
     "@types/react" "*"
 
 "@types/react-lazylog@^4.5.0":

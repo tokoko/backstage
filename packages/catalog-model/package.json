@@ -31,6 +31,7 @@
   "dependencies": {
     "@backstage/config": "^0.1.2",
     "@types/json-schema": "^7.0.5",
+    "@types/react-jsonschema-form": "^1.7.4",
     "@types/yup": "^0.29.8",
     "ajv": "^7.0.3",
     "json-schema": "^0.2.5",
