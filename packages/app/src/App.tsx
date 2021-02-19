@@ -18,7 +18,6 @@ import {
   AlertDisplay,
   createApp,
   createRouteRef,
-  LocalStorageFeatureFlags,
   FlatRoutes,
   OAuthRequestDialog,
   SignInPage,
@@ -77,7 +76,6 @@ const app = createApp({
 const AppProvider = app.getProvider();
 const AppRouter = app.getRouter();
 const deprecatedAppRoutes = app.getRoutes();
-const featureFlags = new LocalStorageFeatureFlags();
 const catalogRouteRef = createRouteRef({
   path: '/catalog',
   title: 'Service Catalog',
@@ -94,9 +92,7 @@ const routes = (
       <EntityPage />
     </Route>
     <Route path="/catalog-import" element={<CatalogImportPage />} />
-    {featureFlags.isActive('use-search-platform') && (
-      <Route path="/search" element={<SearchPage />} />
-    )}
+    <Route path="/search-next" element={<SearchPage />} />
     <Route path="/docs" element={<DocsRouter />} />
     <Route path="/create" element={<ScaffolderPage />} />
     <Route path="/explore" element={<ExplorePage />} />
