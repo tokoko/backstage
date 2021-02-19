@@ -27,7 +27,11 @@ export const rootRoute = createRouteRef({
 });
 export const catalogRouteRef = rootRoute;
 
-export const entityRoute = createRouteRef({
+export const entityRoute = createRouteRef<{
+  kind: string;
+  namespace: string;
+  name: string;
+}>({
   icon: NoIcon,
   path: ':namespace/:kind/:name/*',
   title: 'Entity',
